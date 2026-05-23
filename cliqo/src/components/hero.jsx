@@ -13,7 +13,7 @@ export function Hero() {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
               Find Your{' '}
               <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Cliqo
+                Viber
               </span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-600">
@@ -21,14 +21,14 @@ export function Hero() {
               From college students to working professionals, find your community online.
             </p>
             <p className="text-xl font-semibold text-[#5BA3D0]">
-              Connect with Cliqo
+              Connect with Viber
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => navigate('/login')}
                 className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:shadow-xl transition-all text-lg"
               >
-                Join Cliqo
+                Join Viber
               </button>
               <button className="px-8 py-4 border-2 border-[#5BA3D0] text-[#5BA3D0] rounded-full hover:bg-blue-50 transition-all text-lg">
                 Learn More
