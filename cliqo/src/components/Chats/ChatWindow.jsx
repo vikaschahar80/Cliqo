@@ -1,18 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, MoreVertical, Video, Phone, PhoneOff, UserX } from 'lucide-react';
-import api from '../../lib/axios';
+import api, { API_URL } from '../../lib/axios';
 import { io } from 'socket.io-client';
 
-const isProduction = import.meta.env.PROD;
-let ENDPOINT = import.meta.env.VITE_API_URL;
-
-const isVercel = typeof window !== 'undefined' && window.location && window.location.hostname.includes('vercel.app');
-
-if (isVercel) {
-  ENDPOINT = 'https://clique-tubd.onrender.com';
-} else if (!ENDPOINT || ENDPOINT.trim() === '' || ENDPOINT === '/' || ENDPOINT.includes('.vercel.app')) {
-  ENDPOINT = isProduction ? "https://clique-tubd.onrender.com" : "http://localhost:3000";
-}
+const ENDPOINT = API_URL;
 let socket, selectedChatCompare;
 
 export default function ChatWindow({ selectedMatch, user, onUnmatch }) {

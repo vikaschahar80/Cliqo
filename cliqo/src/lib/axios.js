@@ -1,18 +1,11 @@
 import axios from 'axios';
 
 const isProduction = import.meta.env.PROD;
-let API_URL = import.meta.env.VITE_API_URL;
 
-// Runtime browser check: If running on vercel.app, always force Render backend
-const isVercel = typeof window !== 'undefined' && window.location && window.location.hostname.includes('vercel.app');
+// Resolve URL from .env (VITE_API_URL) with safe defaults
+export const API_URL = import.meta.env.VITE_API_URL || (isProduction ? 'https://clique-tubd.onrender.com' : 'http://localhost:3000');
 
-if (isVercel) {
-  API_URL = 'https://clique-tubd.onrender.com';
-} else if (!API_URL || API_URL.trim() === '' || API_URL === '/' || API_URL.includes('.vercel.app')) {
-  API_URL = isProduction ? 'https://clique-tubd.onrender.com' : '';
-}
-
-console.log("🔍 [Axios API URL] Resolved to:", API_URL, "isVercel:", isVercel);
+console.log("🔍 [Axios API URL] Resolved to:", API_URL);
 
 const api = axios.create({
   baseURL: API_URL,
