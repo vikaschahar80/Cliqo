@@ -36,11 +36,11 @@ export function Hero() {
             </div>
             <div className="flex items-center gap-8 pt-4">
               <div>
-                <div className="text-2xl font-bold text-gray-900">1,500+</div>
+                <div className="text-2xl font-bold text-gray-900">1,50+</div>
                 <div className="text-sm text-gray-600">Verified Members</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-gray-900">8,500+</div>
+                <div className="text-2xl font-bold text-gray-900">8,50+</div>
                 <div className="text-sm text-gray-600">Connections Made</div>
               </div>
               <div>
