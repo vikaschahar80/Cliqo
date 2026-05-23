@@ -1,6 +1,8 @@
-// import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
+import { useNavigate } from 'react-router-dom';
 
 export function CTA() {
+  const navigate = useNavigate();
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -23,7 +25,10 @@ export function CTA() {
               Your next best friend, partner, or confidant is just a click away.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-4 bg-white text-purple-600 rounded-full hover:shadow-2xl transition-all text-lg font-semibold">
+              <button 
+                onClick={() => navigate('/login')}
+                className="px-8 py-4 bg-white text-purple-600 rounded-full hover:shadow-2xl transition-all text-lg font-semibold"
+              >
                 Sign Up Free
               </button>
               <button className="px-8 py-4 border-2 border-white text-white rounded-full hover:bg-white/10 transition-all text-lg font-semibold">
