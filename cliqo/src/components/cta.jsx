@@ -16,7 +16,7 @@ export function CTA() {
 
           <div className="relative text-center max-w-3xl mx-auto">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-              Ready to Find Your Cliqo?
+              Ready to Find Your Viber?
             </h2>
             <p className="text-lg sm:text-xl text-white/90 mb-8">
               Join thousands of students and professionals who are already making meaningful connections. 
