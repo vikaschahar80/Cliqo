@@ -1,0 +1,69 @@
+import { PrismaClient } from '@prisma/client';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const prisma = new PrismaClient();
+
+async function cleanup() {
+  try {
+    console.log("Starting DB Cleanup of invalid enum values...");
+
+    // Check invalid prompt1Question values and update them to null or standard enum values
+    const affected1 = await prisma.$executeRawUnsafe(
+      `UPDATE "UserProfile" SET "prompt1Question" = NULL WHERE "prompt1Question" NOT IN (
+        'TWO_TRUTHS_AND_A_LIE', 'IM_LOOKING_FOR_SOMEONE_WHO', 'THE_KEY_TO_MY_HEART_IS', 'MY_IDEAL_SUNDAY_LOOKS_LIKE',
+        'IM_OVERLY_COMPETITIVE_ABOUT', 'THE_BEST_WAY_TO_ASK_ME_OUT_IS', 'I_KNOW_THE_BEST_SPOT_IN_TOWN_FOR',
+        'MY_MOST_CONTROVERSIAL_OPINION_IS', 'IM_WEIRDLY_ATTRACTED_TO', 'DONT_HATE_ME_IF_I', 'A_SHOWER_THOUGHT_I_RECENTLY_HAD',
+        'MY_SIMPLE_PLEASURES', 'THE_DORKIEST_THING_ABOUT_ME_IS', 'I_WONT_SHUT_UP_ABOUT', 'MY_GO_TO_KARAOKE_SONG_IS',
+        'I_RECENTLY_DISCOVERED_THAT', 'TOGETHER_WE_COULD', 'IM_CONVINCED_THAT', 'MY_BIGGEST_FLEX_IS', 'GREEN_FLAGS_I_LOOK_FOR',
+        'DATING_ME_IS_LIKE', 'I_GEEK_OUT_ON', 'THE_WAY_TO_WIN_ME_OVER_IS', 'IM_A_REGULAR_AT', 'ILL_FALL_FOR_YOU_IF',
+        'MY_LOVE_LANGUAGE_IS', 'I_TAKE_PRIDE_IN', 'ALL_I_ASK_IS_THAT_YOU', 'WELL_GET_ALONG_IF', 'LETS_DEBATE_THIS_TOPIC',
+        'IM_KNOWN_FOR', 'MY_HIDDEN_TALENT_IS', 'YOU_SHOULD_NOT_GO_OUT_WITH_ME_IF', 'I_WANT_SOMEONE_WHO', 'TYPICAL_SUNDAY',
+        'I_LIKE_MY_DATES_TO_BE', 'WHAT_IM_LOOKING_FOR', 'THIS_YEAR_I_REALLY_WANT_TO', 'THE_HALLMARK_OF_A_GOOD_RELATIONSHIP_IS',
+        'MY_GREATEST_STRENGTH_IS', 'IM_READY_TO'
+      )`
+    );
+    console.log(`Updated ${affected1} rows in prompt1Question.`);
+
+    const affected2 = await prisma.$executeRawUnsafe(
+      `UPDATE "UserProfile" SET "prompt2Question" = NULL WHERE "prompt2Question" NOT IN (
+        'TWO_TRUTHS_AND_A_LIE', 'IM_LOOKING_FOR_SOMEONE_WHO', 'THE_KEY_TO_MY_HEART_IS', 'MY_IDEAL_SUNDAY_LOOKS_LIKE',
+        'IM_OVERLY_COMPETITIVE_ABOUT', 'THE_BEST_WAY_TO_ASK_ME_OUT_IS', 'I_KNOW_THE_BEST_SPOT_IN_TOWN_FOR',
+        'MY_MOST_CONTROVERSIAL_OPINION_IS', 'IM_WEIRDLY_ATTRACTED_TO', 'DONT_HATE_ME_IF_I', 'A_SHOWER_THOUGHT_I_RECENTLY_HAD',
+        'MY_SIMPLE_PLEASURES', 'THE_DORKIEST_THING_ABOUT_ME_IS', 'I_WONT_SHUT_UP_ABOUT', 'MY_GO_TO_KARAOKE_SONG_IS',
+        'I_RECENTLY_DISCOVERED_THAT', 'TOGETHER_WE_COULD', 'IM_CONVINCED_THAT', 'MY_BIGGEST_FLEX_IS', 'GREEN_FLAGS_I_LOOK_FOR',
+        'DATING_ME_IS_LIKE', 'I_GEEK_OUT_ON', 'THE_WAY_TO_WIN_ME_OVER_IS', 'IM_A_REGULAR_AT', 'ILL_FALL_FOR_YOU_IF',
+        'MY_LOVE_LANGUAGE_IS', 'I_TAKE_PRIDE_IN', 'ALL_I_ASK_IS_THAT_YOU', 'WELL_GET_ALONG_IF', 'LETS_DEBATE_THIS_TOPIC',
+        'IM_KNOWN_FOR', 'MY_HIDDEN_TALENT_IS', 'YOU_SHOULD_NOT_GO_OUT_WITH_ME_IF', 'I_WANT_SOMEONE_WHO', 'TYPICAL_SUNDAY',
+        'I_LIKE_MY_DATES_TO_BE', 'WHAT_IM_LOOKING_FOR', 'THIS_YEAR_I_REALLY_WANT_TO', 'THE_HALLMARK_OF_A_GOOD_RELATIONSHIP_IS',
+        'MY_GREATEST_STRENGTH_IS', 'IM_READY_TO'
+      )`
+    );
+    console.log(`Updated ${affected2} rows in prompt2Question.`);
+
+    const affected3 = await prisma.$executeRawUnsafe(
+      `UPDATE "UserProfile" SET "prompt3Question" = NULL WHERE "prompt3Question" NOT IN (
+        'TWO_TRUTHS_AND_A_LIE', 'IM_LOOKING_FOR_SOMEONE_WHO', 'THE_KEY_TO_MY_HEART_IS', 'MY_IDEAL_SUNDAY_LOOKS_LIKE',
+        'IM_OVERLY_COMPETITIVE_ABOUT', 'THE_BEST_WAY_TO_ASK_ME_OUT_IS', 'I_KNOW_THE_BEST_SPOT_IN_TOWN_FOR',
+        'MY_MOST_CONTROVERSIAL_OPINION_IS', 'IM_WEIRDLY_ATTRACTED_TO', 'DONT_HATE_ME_IF_I', 'A_SHOWER_THOUGHT_I_RECENTLY_HAD',
+        'MY_SIMPLE_PLEASURES', 'THE_DORKIEST_THING_ABOUT_ME_IS', 'I_WONT_SHUT_UP_ABOUT', 'MY_GO_TO_KARAOKE_SONG_IS',
+        'I_RECENTLY_DISCOVERED_THAT', 'TOGETHER_WE_COULD', 'IM_CONVINCED_THAT', 'MY_BIGGEST_FLEX_IS', 'GREEN_FLAGS_I_LOOK_FOR',
+        'DATING_ME_IS_LIKE', 'I_GEEK_OUT_ON', 'THE_WAY_TO_WIN_ME_OVER_IS', 'IM_A_REGULAR_AT', 'ILL_FALL_FOR_YOU_IF',
+        'MY_LOVE_LANGUAGE_IS', 'I_TAKE_PRIDE_IN', 'ALL_I_ASK_IS_THAT_YOU', 'WELL_GET_ALONG_IF', 'LETS_DEBATE_THIS_TOPIC',
+        'IM_KNOWN_FOR', 'MY_HIDDEN_TALENT_IS', 'YOU_SHOULD_NOT_GO_OUT_WITH_ME_IF', 'I_WANT_SOMEONE_WHO', 'TYPICAL_SUNDAY',
+        'I_LIKE_MY_DATES_TO_BE', 'WHAT_IM_LOOKING_FOR', 'THIS_YEAR_I_REALLY_WANT_TO', 'THE_HALLMARK_OF_A_GOOD_RELATIONSHIP_IS',
+        'MY_GREATEST_STRENGTH_IS', 'IM_READY_TO'
+      )`
+    );
+    console.log(`Updated ${affected3} rows in prompt3Question.`);
+
+    console.log("Database successfully cleaned up!");
+  } catch (err) {
+    console.error("Cleanup failed:", err);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+cleanup();
