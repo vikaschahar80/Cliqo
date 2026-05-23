@@ -121,12 +121,12 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:5173',
       'http://localhost:3000',
-      'https://clique-social.vercel.app'
+      'https://cliqo-social.vercel.app'
     ];
     if (process.env.FRONTEND_URL) {
       allowedOrigins.push(process.env.FRONTEND_URL.replace(/\/$/, ""));
     }
-    
+
     if (
       allowedOrigins.includes(cleanOrigin) ||
       /\.vercel\.app$/.test(cleanOrigin) ||
@@ -360,12 +360,12 @@ app.post('/api/verify/email/confirm', verifyToken, emailLimiter, async (req, res
 const adminOnly = async (req, res, next) => {
   try {
     const user = await prisma.user.findUnique({ where: { id: req.user.userId } });
-    
+
     // Check either the DB role column OR the hardcoded email list for safety
     if (user?.isAdmin || user?.role === 'admin' || ADMIN_EMAILS.includes(user?.email)) {
       return next();
     }
-    
+
     return res.status(403).json({ success: false, message: 'Admin access required' });
   } catch (error) { next(error); }
 };
@@ -382,7 +382,7 @@ app.post('/api/upload', upload.single('image'), async (req, res, next) => {
     if (!req.file) return res.status(400).json({ success: false, message: "No file uploaded" });
     const b64 = Buffer.from(req.file.buffer).toString('base64');
     const dataURI = `data:${req.file.mimetype};base64,${b64}`;
-    const result = await cloudinaryMain.uploader.upload(dataURI, { 
+    const result = await cloudinaryMain.uploader.upload(dataURI, {
       folder: "user_profiles",
       transformation: [
         { width: 800, height: 800, crop: "limit" },
@@ -460,8 +460,8 @@ app.post('/api/auth/google', async (req, res, next) => {
   try {
     const { credential } = req.body;
     const ticket = await googleClient.verifyIdToken({
-        idToken: credential,
-        audience: process.env.GOOGLE_CLIENT_ID
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID
     });
     const payload = ticket.getPayload();
     const { email, name, sub: googleId } = payload;
@@ -484,19 +484,19 @@ app.post('/api/auth/google', async (req, res, next) => {
 
     const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
     res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict', maxAge: 7 * 24 * 60 * 60 * 1000 });
-    res.json({ 
-      success: true, 
-      token, 
-      user: { 
-        id: user.id, 
-        email: user.email, 
-        fullName: user.fullName, 
-        isProfileComplete: !!user.profile 
-      } 
+    res.json({
+      success: true,
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        fullName: user.fullName,
+        isProfileComplete: !!user.profile
+      }
     });
-  } catch (error) { 
+  } catch (error) {
     console.error("Google Auth Error:", error);
-    next(error); 
+    next(error);
   }
 });
 
@@ -529,12 +529,12 @@ app.delete('/api/user/delete', verifyToken, async (req, res, next) => {
 app.get('/api/profiles', verifyToken, async (req, res, next) => {
   try {
     const userId = parseInt(req.user.userId);
-    
+
     const currentUser = await prisma.user.findUnique({
       where: { id: userId },
       include: { profile: true, preferences: true }
     });
-    
+
     const maxDistance = currentUser?.preferences?.maxDistance || 50;
     const myLat = currentUser?.profile?.latitude;
     const myLon = currentUser?.profile?.longitude;
@@ -549,18 +549,18 @@ app.get('/api/profiles', verifyToken, async (req, res, next) => {
       ]
     });
 
-    const excludedUserIds = myConnections.map(c => 
+    const excludedUserIds = myConnections.map(c =>
       c.senderId === userId ? c.receiverId : c.senderId
     );
     const excludedIdsArray = [...new Set([...excludedUserIds, userId])];
 
     const users = await prisma.user.findMany({
-      where: { 
-        id: { notIn: excludedIdsArray }, 
-        profile: { 
+      where: {
+        id: { notIn: excludedIdsArray },
+        profile: {
           isNot: null,
           isPaused: false
-        } 
+        }
       },
       include: { profile: true, preferences: true },
     });
@@ -588,7 +588,7 @@ app.get('/api/profiles', verifyToken, async (req, res, next) => {
     }
 
     let filteredUsers = users;
-    
+
     // Only perform gender filtering if targetGenders or targetInterestsForOther is populated
     if (targetGenders.length > 0) {
       filteredUsers = filteredUsers.filter(u => {
@@ -920,7 +920,7 @@ app.post('/api/connections/like', verifyToken, async (req, res, next) => {
   try {
     const senderId = parseInt(req.user.userId);
     const { receiverId, likeType = 'DATING' } = req.body;
-    
+
     // Check daily limit (10 likes per day)
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
@@ -935,7 +935,7 @@ app.post('/api/connections/like', verifyToken, async (req, res, next) => {
 
     // Check if the receiver already liked the sender
     const existingConnection = await Connection.findOne({ senderId: receiverId, receiverId: senderId });
-    
+
     if (existingConnection) {
       if (existingConnection.status === 'pending') {
         // Mutual like -> Match!
@@ -945,18 +945,18 @@ app.post('/api/connections/like', verifyToken, async (req, res, next) => {
         const existingChat = await Chat.findOne({
           participants: { $all: [senderId, receiverId], $size: 2 }
         });
-        
+
         if (!existingChat) {
           const newChat = new Chat({ participants: [senderId, receiverId] });
           await newChat.save();
         }
-        
+
         return res.json({ success: true, match: true, message: "It's a match!" });
       } else {
         return res.json({ success: true, message: "Already connected" });
       }
     }
-    
+
     // Create new pending connection
     await Connection.findOneAndUpdate(
       { senderId, receiverId },
@@ -971,13 +971,13 @@ app.post('/api/connections/pass', verifyToken, async (req, res, next) => {
   try {
     const senderId = parseInt(req.user.userId);
     const { receiverId } = req.body;
-    
+
     await Connection.findOneAndUpdate(
       { senderId, receiverId },
       { status: 'rejected' },
       { upsert: true, new: true }
     );
-    
+
     res.json({ success: true, message: "Passed" });
   } catch (error) { next(error); }
 });
@@ -988,23 +988,23 @@ app.get('/api/connections/likes', verifyToken, async (req, res, next) => {
     // Find who liked the current user
     const likes = await Connection.find({ receiverId: userId, status: 'pending' });
     const senderIds = likes.map(l => l.senderId);
-    
+
     if (senderIds.length === 0) {
       return res.json({ success: true, profiles: [] });
     }
-    
+
     // Fetch profiles from Postgres
     const users = await prisma.user.findMany({
       where: { id: { in: senderIds }, profile: { isNot: null } },
       include: { profile: true }
     });
-    
+
     const profiles = users.map(u => ({
-        id: u.id.toString(),
-        name: u.profile.preferredName || u.fullName.split(' ')[0],
-        photos: u.profile.photos.length > 0 ? u.profile.photos : ["https://placehold.co/600x800?text=No+Photo"],
+      id: u.id.toString(),
+      name: u.profile.preferredName || u.fullName.split(' ')[0],
+      photos: u.profile.photos.length > 0 ? u.profile.photos : ["https://placehold.co/600x800?text=No+Photo"],
     }));
-    
+
     res.json({ success: true, profiles });
   } catch (error) { next(error); }
 });
@@ -1013,22 +1013,22 @@ app.get('/api/chats', verifyToken, async (req, res, next) => {
   try {
     const userId = parseInt(req.user.userId);
     const chats = await Chat.find({ participants: userId }).populate('lastMessage');
-    
+
     // Extract user IDs to fetch from Postgres
     const participantIds = new Set();
     chats.forEach(chat => {
       chat.participants.forEach(p => { if (p !== userId) participantIds.add(p); });
     });
-    
+
     if (participantIds.size === 0) {
       return res.json({ success: true, chats: [] });
     }
-    
+
     const users = await prisma.user.findMany({
       where: { id: { in: Array.from(participantIds) } },
       include: { profile: true }
     });
-    
+
     const userMap = {};
     users.forEach(u => {
       userMap[u.id] = {
@@ -1037,7 +1037,7 @@ app.get('/api/chats', verifyToken, async (req, res, next) => {
         photo: u.profile?.photos?.[0] || "https://placehold.co/150x150?text=U"
       };
     });
-    
+
     const formattedChats = chats.map(chat => {
       const otherParticipantId = chat.participants.find(p => p !== userId);
       return {
@@ -1047,7 +1047,7 @@ app.get('/api/chats', verifyToken, async (req, res, next) => {
         updatedAt: chat.updatedAt
       };
     });
-    
+
     res.json({ success: true, chats: formattedChats });
   } catch (error) { next(error); }
 });
@@ -1135,7 +1135,7 @@ app.post('/api/admin/verify/:userId', verifyToken, adminOnly, async (req, res, n
   try {
     const userId = parseInt(req.params.userId);
     const { isVerified, isPersonVerified, isIdVerified, isCollegeVerified, isWorkVerified } = req.body;
-    
+
     // Check if profile exists
     const profile = await prisma.userProfile.findUnique({ where: { userId } });
     if (!profile) return res.status(404).json({ success: false, message: 'User profile not found' });
@@ -1153,7 +1153,7 @@ app.post('/api/admin/verify/:userId', verifyToken, adminOnly, async (req, res, n
       where: { userId },
       data: updateData
     });
-    
+
     res.json({ success: true });
   } catch (error) { next(error); }
 });
@@ -1201,7 +1201,7 @@ app.post('/api/verify/request', verifyToken, upload.fields([{ name: 'selfie', ma
     const uploadBuffer = async (fileBuffer, mimetype, folder) => {
       const b64 = Buffer.from(fileBuffer).toString('base64');
       const dataURI = `data:${mimetype};base64,${b64}`;
-      return uploader.uploader.upload(dataURI, { 
+      return uploader.uploader.upload(dataURI, {
         folder: folder,
         transformation: [
           { width: 1000, crop: "limit" },
@@ -1369,16 +1369,14 @@ app.post('/api/admin/verifications/:id/resolve', verifyToken, adminOnly, async (
 // --- Global Error Handler ---
 app.use((err, req, res, next) => {
   console.error('[Global Error Handler]:', err.stack || err);
-  
+
   const status = err.status || 500;
-  const message = process.env.NODE_ENV === 'production' 
-    ? 'Internal Server Error' 
-    : err.message || 'Something went wrong';
+  const message = err.message || 'Something went wrong';
 
   res.status(status).json({
     success: false,
     message,
-    ...(process.env.NODE_ENV !== 'production' && { stack: err.stack })
+    stack: err.stack
   });
 });
 
