@@ -559,7 +559,9 @@ app.get('/api/profiles', verifyToken, async (req, res, next) => {
         id: { notIn: excludedIdsArray },
         profile: {
           isNot: null,
-          isPaused: false
+          is: {
+            isPaused: false
+          }
         }
       },
       include: { profile: true, preferences: true },
@@ -685,8 +687,10 @@ app.get('/api/profiles/nearby', verifyToken, async (req, res, next) => {
         id: { not: userId },
         profile: {
           isNot: null,
-          isPaused: false,
-          NOT: [{ latitude: null }, { longitude: null }]
+          is: {
+            isPaused: false,
+            NOT: [{ latitude: null }, { longitude: null }]
+          }
         }
       },
       include: { profile: true },
