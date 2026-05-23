@@ -1,18 +1,19 @@
-// import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
+import { useNavigate } from 'react-router-dom';
 
 export function Community() {
+  const navigate = useNavigate();
   const audiences = [
     {
       title: 'College Students',
       description: 'Connect with fellow students from your campus or across the country. Find study partners, roommates, or friends who share your major.',
       image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2xsZWdlJTIwc3R1ZGVudHMlMjBzdHVkeWluZ3xlbnwxfHx8fDE3Njg2MjQyNjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      stats: ['30K+ Students', '500+ Universities', '1000+ Study Groups'],
+      stats: ['30+ Students', '15+ Universities', '10+ Study Groups'],
     },
     {
       title: 'Working Professionals',
       description: 'Expand your network beyond the office. Meet professionals in your industry or explore new interests with people who understand your busy schedule.',
       image: 'https://images.unsplash.com/photo-1761949119766-ce7870c38bd2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b3VuZyUyMHByb2Zlc3Npb25hbHMlMjBuZXR3b3JraW5nfGVufDF8fHx8MTc2ODYyNDI2OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      stats: ['20K+ Professionals', '100+ Industries', '500+ Networking Events'],
+      stats: ['20+ Professionals', '10+ Industries', '15+ Networking Events'],
     },
   ];
 
@@ -48,7 +49,7 @@ export function Community() {
                 </p>
                 <div className="flex flex-wrap gap-4 mb-6">
                   {audience.stats.map((stat, statIndex) => (
-                    <div
+                     <div
                       key={statIndex}
                       className="px-4 py-2 bg-blue-100 text-[#4A7C9D] rounded-full"
                     >
@@ -56,7 +57,10 @@ export function Community() {
                     </div>
                   ))}
                 </div>
-                <button className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:shadow-lg transition-all">
+                <button 
+                  onClick={() => navigate('/login')}
+                  className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:shadow-lg transition-all"
+                >
                   Join {audience.title.split(' ')[0]}s
                 </button>
               </div>
