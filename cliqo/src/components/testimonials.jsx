@@ -1,68 +1,36 @@
-import { Star } from 'lucide-react';
+import { Star, MessageSquareQuote } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export function Testimonials() {
-  const testimonials = [
-    {
-      name: 'Sarah M.',
-      role: 'College Student',
-      image: 'https://ui-avatars.com/api/?name=Sarah+M&background=5BA3D0&color=fff&size=80',
-      text: 'I moved to a new city for college and felt so alone. Cliqo helped me find an amazing group of friends who share my love for hiking and photography!',
-      rating: 5,
-    },
-    {
-      name: 'James K.',
-      role: 'Software Engineer',
-      image: 'https://ui-avatars.com/api/?name=James+K&background=4A7C9D&color=fff&size=80',
-      text: 'As someone who works remotely, it was hard to meet new people. Through Cliqo, I found a great community of tech professionals and even met my girlfriend!',
-      rating: 5,
-    },
-    {
-      name: 'Maya P.',
-      role: 'Graduate Student',
-      image: 'https://ui-avatars.com/api/?name=Maya+P&background=5BA3D0&color=fff&size=80',
-      text: 'The listening feature is incredible. Sometimes you just need someone to talk to without judgment. Cliqo provided that safe space for me.',
-      rating: 5,
-    },
-  ];
+  const navigate = useNavigate();
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-white to-cyan-50">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            What Our Users Say
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Real stories from real people who found their community through Cliqo.
-          </p>
+      <div className="max-w-3xl mx-auto text-center">
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center text-purple-600 mx-auto mb-6 shadow-sm">
+          <MessageSquareQuote className="w-8 h-8" />
         </div>
+        
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          Be the First to Review!
+        </h2>
+        
+        <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+          Viber is currently in early private beta! Be part of our growing community, connect with students and professionals from campuses across India, and help us write the very first reviews.
+        </p>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow"
-            >
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-              <p className="text-gray-700 mb-6 italic">"{testimonial.text}"</p>
-              <div className="flex items-center gap-3">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full"
-                />
-                <div>
-                  <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                  <div className="text-sm text-gray-600">{testimonial.role}</div>
-                </div>
-              </div>
-            </div>
+        <div className="flex items-center justify-center gap-1 mb-8">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
           ))}
         </div>
+
+        <button 
+          onClick={() => navigate('/login')}
+          className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:shadow-xl hover:scale-105 transition-all text-lg font-semibold shadow-md"
+        >
+          Join Viber & Share Your Review
+        </button>
       </div>
     </section>
   );

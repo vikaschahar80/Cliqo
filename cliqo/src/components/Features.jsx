@@ -1,42 +1,42 @@
-import { Users, Heart, MessageCircle, Briefcase, GraduationCap, Coffee } from 'lucide-react';
+import { Users, Heart, GraduationCap, MapPin, Languages, SlidersHorizontal } from 'lucide-react';
 
 export function Features() {
   const features = [
     {
-      icon: Users,
-      title: 'Make Friends',
-      description: 'Connect with people who share your interests, hobbies, and values.',
-      color: 'from-[#5BA3D0] to-[#4A7C9D]',
-    },
-    {
-      icon: Heart,
-      title: 'Find Love',
-      description: 'Meet potential partners with similar goals and relationship expectations.',
-      color: 'from-pink-500 to-rose-500',
-    },
-    {
-      icon: MessageCircle,
-      title: 'Be Heard',
-      description: 'Find someone who truly listens. Share your thoughts in a safe space.',
+      icon: GraduationCap,
+      title: 'Campus Email Verification',
+      description: 'Connect safely. We verify official college and university email domains to ensure you are connecting with real, verified students.',
       color: 'from-purple-500 to-indigo-500',
     },
     {
-      icon: GraduationCap,
-      title: 'For Students',
-      description: 'Connect with fellow students, study buddies, and campus friends.',
+      icon: MapPin,
+      title: 'Indian Cities Discovery',
+      description: 'Discover people in your current city (Delhi, Mumbai, Bengaluru, etc.) or connect with folks from your hometown who share your roots.',
+      color: 'from-cyan-500 to-blue-600',
+    },
+    {
+      icon: Heart,
+      title: 'No Pay-to-Match',
+      description: 'We believe in genuine connections. Enjoy honest matching with a healthy daily limit, completely free of paid boosts or swipe packages.',
+      color: 'from-pink-500 to-rose-500',
+    },
+    {
+      icon: Languages,
+      title: 'Multilingual Expression',
+      description: 'Filter and express yourself in Hindi, English, and other regional languages to find people who speak your heart’s language.',
+      color: 'from-teal-500 to-emerald-600',
+    },
+    {
+      icon: Users,
+      title: 'Dating & Friendship Modes',
+      description: 'Dual modes let you choose whether you are looking for romance (Dating) or peer study buddies, roommates, and network circles (Friendship).',
       color: 'from-[#5BA3D0] to-[#4A7C9D]',
     },
     {
-      icon: Briefcase,
-      title: 'For Professionals',
-      description: 'Network with working professionals and expand your social circle.',
-      color: 'from-[#6BB5DC] to-[#5BA3D0]',
-    },
-    {
-      icon: Coffee,
-      title: 'Meet Up',
-      description: 'Take your online connections offline with safe meetup features.',
-      color: 'from-purple-600 to-pink-500',
+      icon: SlidersHorizontal,
+      title: 'Cultural & Lifestyle Filters',
+      description: 'Filter profiles by hometown, lifestyle preferences, and unique ice-breaker prompts that actually reveal personality.',
+      color: 'from-amber-500 to-orange-600',
     },
   ];
 
@@ -45,14 +45,13 @@ export function Features() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Everything You Need to{' '}
+            Built for{' '}
             <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Connect
+              Real Connections
             </span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Whether you're looking for friendship, romance, or just someone to talk to, 
-            Cliqo has you covered.
+            Viber is tailored to how Indian college students and young professionals actually connect, safely and honestly.
           </p>
         </div>
 
